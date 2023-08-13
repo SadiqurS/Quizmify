@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 import { strict_output } from "@/lib/gpt";
 
 // POST /api/questions
-export const POST = async (req: Request, res: Response) => {
+export const generateQuestionAPI = async ({amount, topic, type}: any) => {
   try {
     // const session = await getAuthSession();
     // if (!session?.user) {
@@ -17,8 +17,7 @@ export const POST = async (req: Request, res: Response) => {
     //     }
     //   );
     // }
-    const body = await req.json();
-    const { amount, topic, type } = quizCreationSchema.parse(body);
+    
     let questions: any;
     if (type === "open_ended") {
       questions = await strict_output(
@@ -46,32 +45,15 @@ export const POST = async (req: Request, res: Response) => {
         }
       );
     }
-    return NextResponse.json(
-      {
+    return {
         questions: questions,
-      },
-      {
-        status: 200,
       }
-    );
-    return NextResponse.json(
-      {
-        questions,
-      },
-      {
-        status: 200,
-      }
-    );
+     
+   
   } catch (error) {
     if (error instanceof ZodError) {
-      return NextResponse.json(
-        {
-          error: error.issues,
-        },
-        {
-          status: 400,
-        }
-      );
+      console.log(error);
+      
     }
   }
 };

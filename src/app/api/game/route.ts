@@ -4,6 +4,7 @@ import { quizCreationSchema } from "@/schemas/form/quiz";
 import axios from "axios";
 import { ZodError } from "zod";
 import { prisma } from "@/lib/db";
+import { generateQuestionAPI } from "../questions/route";
 
 // /api/game
 export async function POST(req: Request, res: Response) {
@@ -41,7 +42,8 @@ export async function POST(req: Request, res: Response) {
         },
       },
     });
-    const { data } = await axios.post(`/api/questions`, {
+    // ts-ignore
+    const data = await generateQuestionAPI({
       amount,
       topic,
       type,
@@ -100,7 +102,7 @@ export async function POST(req: Request, res: Response) {
         data: manyData,
       });
     }
-    
+
     return NextResponse.json({
       gameId: game.id,
     });
