@@ -51,6 +51,7 @@ const OpenEnded = ({ game }: Props) => {
       const payload: z.infer<typeof checkAnswerSchema> = {
         questionId: currentQuestion.id,
         userAnswer: filledAnswer,
+        gameId: game.id,
       };
       const response = await axios.post("/api/checkAnswer", payload);
       return response.data;
@@ -134,7 +135,7 @@ const OpenEnded = ({ game }: Props) => {
             </div>
           </CardTitle>
           <CardDescription className="flex-grow text-lg">
-            {currentQuestion.question}
+            {currentQuestion?.question}
           </CardDescription>
         </CardHeader>
       </Card>

@@ -10,6 +10,7 @@ type Props = {
 };
 
 const TimeTakenCard = ({ timeEnded, timeStarted }: Props) => {
+  console.log(timeEnded, timeStarted);
   return (
     <Card className="md:col-span-4">
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">

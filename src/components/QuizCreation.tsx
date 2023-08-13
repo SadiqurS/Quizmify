@@ -45,7 +45,7 @@ const QuizCreation = ({ topicParam }: Props) => {
         amount,
         topic,
         type,
-      });
+      });      
       return response.data;
     },
   });
@@ -53,13 +53,14 @@ const QuizCreation = ({ topicParam }: Props) => {
   const form = useForm<Input>({
     resolver: zodResolver(quizCreationSchema),
     defaultValues: {
-      amount: 3,
+      amount: 0,
       topic: topicParam,
       type: "open_ended",
     },
   });
 
   function onSubmit(input: Input) {
+    console.log(input);
     setShowLoader(true);
     getQuestions(
       {

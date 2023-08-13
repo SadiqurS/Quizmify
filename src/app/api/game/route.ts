@@ -46,6 +46,14 @@ export async function POST(req: Request, res: Response) {
       topic,
       type,
     });
+    if (!data || !data.questions || data.questions.length === 0) {
+      return NextResponse.json(
+        {
+          error: "No questions available",
+        },
+        { status: 400 }
+      );
+    }
     if (type == "mcq") {
       // console.log("meow", data.questions);
       type mcqQuestion = {
@@ -71,6 +79,7 @@ export async function POST(req: Request, res: Response) {
           questionType: "mcq",
         };
       });
+
       await prisma.question.createMany({
         data: manyData,
       });
@@ -91,6 +100,7 @@ export async function POST(req: Request, res: Response) {
         data: manyData,
       });
     }
+    
     return NextResponse.json({
       gameId: game.id,
     });

@@ -48,6 +48,7 @@ const MCQ = ({ game }: Props) => {
       const payload: z.infer<typeof checkAnswerSchema> = {
         questionId: currentQuestion.id,
         userAnswer: options[selectedChoice],
+        gameId: game.id,
       };
       const response = await axios.post("/api/checkAnswer", payload);
       return response.data;
@@ -139,7 +140,7 @@ const MCQ = ({ game }: Props) => {
           </p>
           <div className="flex self-start mt-3 text-slate-400">
             <Timer className="mr-2" />
-            {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+            {formatTimeDelta(differenceInSeconds(now, new Date(game.timeStarted)))}
           </div>
         </div>
         <MCQCounter
@@ -156,7 +157,7 @@ const MCQ = ({ game }: Props) => {
             </div>
           </CardTitle>
           <CardDescription className="flex-grow text-lg">
-            {currentQuestion.question}
+            {currentQuestion?.question}
           </CardDescription>
         </CardHeader>
       </Card>

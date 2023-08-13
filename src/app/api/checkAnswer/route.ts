@@ -7,7 +7,7 @@ import { compareTwoStrings } from "string-similarity";
 export async function POST(req: Request, res: Response) {
   try {
     const body = await req.json();
-    const { questionId, userAnswer } = checkAnswerSchema.parse(body);
+    const { questionId, userAnswer, gameId } = checkAnswerSchema.parse(body);
     const question = await prisma.question.findUnique({
       where: { id: questionId },
     });
@@ -25,6 +25,16 @@ export async function POST(req: Request, res: Response) {
       where: { id: questionId },
       data: {
         userAnswer,
+      },
+    });
+
+    // Update the game record with the ending time
+    await prisma.game.update({
+      where: {
+        id: gameId,
+      },
+      data: {
+        timeEnded: new Date(),
       },
     });
     if (question.questionType === "mcq") {
