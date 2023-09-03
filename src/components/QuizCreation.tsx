@@ -45,7 +45,7 @@ const QuizCreation = ({ topicParam }: Props) => {
         amount,
         topic,
         type,
-      });      
+      });
       return response.data;
     },
   });
@@ -173,6 +173,12 @@ const QuizCreation = ({ topicParam }: Props) => {
           </Form>
         </CardContent>
       </Card>
+      <div className="flex flex-col items-center pt-[1rem] max-w-[420px]">
+        <span className="text-red-500 break-all">
+          This software relies on OpenAI API, which may require multiple
+          submissions or prompt rephrasing due to occasional reliability issues.
+        </span>
+      </div>
     </div>
   );
 };
